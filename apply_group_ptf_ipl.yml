@@ -200,6 +200,6 @@
     
               when: query_ptf_result.row | bool
 
-      when: sync_result.fail_list == []
+          when: sync_result.fail_list == []
 
-  when: file_result.failed == 0
+      when: file_result.failed == 0
