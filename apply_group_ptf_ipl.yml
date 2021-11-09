@@ -1,7 +1,7 @@
 ---
 # tasks file for ipl_system_to_conduct_ipl_action_of_ptfs
 
-- hosts: testhost
+- hosts: '{{ target_system }}'
   gather_facts: false
   collections:
     - ibm.power_ibmi
