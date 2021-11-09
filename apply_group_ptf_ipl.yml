@@ -12,7 +12,7 @@
 ---
 # tasks file for ipl_system_to_conduct_ipl_action_of_ptfs
 
-- hosts: '{{ target_system }}'
+- hosts: '172.69.11.82'
   gather_facts: false
   collections:
     - ibm.power_ibmi
@@ -37,7 +37,9 @@
 
     - name: Query the list of ptfs which requires an IPL
       ibmi_sql_query:
-        sql: "SELECT PTF_IDENTIFIER, PTF_PRODUCT_ID, PTF_IPL_ACTION, A.* FROM QSYS2.PTF_INFO A WHERE PTF_IPL_ACTION <> 'NONE'"
+        sql: "SELECT PTF_IDENTIFIER, PTF_PRODUCT_ID, PTF_IPL_ACTION, A.*
+        FROM QSYS2.PTF_INFO A
+        WHERE PTF_IPL_ACTION <> 'NONE'"
       register: query_ptf_result
 
     - name: Debug msg
@@ -74,5 +76,4 @@
             end_subsystem_option: '{{ end_subsystem_option }}'
             timeout_option: '{{ timeout_option }}'
           when: auto_ipl | bool
-
-        - when: query_ptf_result.row | length > 0
+      when: query_ptf_result.row | length > 0
