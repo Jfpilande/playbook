@@ -74,6 +74,3 @@
             end_subsystem_option: '{{ end_subsystem_option }}'
             timeout_option: '{{ timeout_option }}'
             
-          when: auto_ipl | bool
-
-      when: query_ptf_result.row | length > 0
