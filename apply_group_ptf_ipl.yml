@@ -1,7 +1,18 @@
+# Copyright (c) IBM Corporation 2019, 2020
+# Apache License, Version 2.0 (see https://opensource.org/licenses/Apache-2.0)
+#
+# Description:
+  # The playbook file is to provide an example about how to query all PTFs requring IPL to  be applied or removed, then IPL system per required.
+
+# Parameters:
+  # auto_ipl --  Specifies if an IPL is launched automatically when there is/are PTF(s) requiring IPL to be applied or removed.
+  # All options supported by ibmi_reboot.
+
+# Command example: ansible-playbook ./ipl_system_to_conduct_ipl_action_of_ptfs.yml
 ---
 # tasks file for ipl_system_to_conduct_ipl_action_of_ptfs
 
-  hosts: {{ target_system }}
+- hosts: '{{ target_system }}'
   gather_facts: false
   collections:
     - ibm.power_ibmi
@@ -63,5 +74,6 @@
             end_subsystem_option: '{{ end_subsystem_option }}'
             timeout_option: '{{ timeout_option }}'
           when: auto_ipl | bool
-    
-  when: query_ptf_result.row | length > 0
+
+      when: query_ptf_result.row | length > 0
+      
