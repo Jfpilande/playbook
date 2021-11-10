@@ -6,7 +6,7 @@
     - ibm.power_ibmi
 
   vars:
-    auto_ipl: true
+    auto_ipl: false
     pre_reboot_delay: 60
     post_reboot_delay: 60
     reboot_timeout: 1800
@@ -21,7 +21,7 @@
     timeout_option: '*CONTINUE'
     parameters: ''
 
-  task:
+  jobs:
     - name: Reboot the system immediately if auto_ipl is set to true and at least one PTF requires an IPL
       ibm_reboot:
         pre_reboot_delay: '{{ pre_reboot_delay }}'
