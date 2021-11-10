@@ -21,7 +21,7 @@
     timeout_option: '*CONTINUE'
     parameters: ''
 
-    jobs:
+    task:
       - name: Reboot the system immediately if auto_ipl is set to true and at least one PTF requires an IPL
         ibm_reboot:
           pre_reboot_delay: '{{ pre_reboot_delay }}'
