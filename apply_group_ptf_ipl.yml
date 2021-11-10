@@ -2,7 +2,7 @@
 
 - name: IPL single IBMi host
 
-  host: '{{ testhost }}'
+  hosts: '{{ testhost }}'
   gather_facts: false
   collections:
     - ibm.power_ibmi
