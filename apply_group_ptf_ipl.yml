@@ -1,18 +1,6 @@
-# Copyright (c) IBM Corporation 2019, 2020
-# Apache License, Version 2.0 (see https://opensource.org/licenses/Apache-2.0)
-#
-# Description:
-  # The playbook file is to provide an example about how to query all PTFs requring IPL to  be applied or removed, then IPL system per required.
-
-# Parameters:
-  # auto_ipl --  Specifies if an IPL is launched automatically when there is/are PTF(s) requiring IPL to be applied or removed.
-  # All options supported by ibmi_reboot.
-
-# Command example: ansible-playbook ./ipl_system_to_conduct_ipl_action_of_ptfs.yml
 ---
-# tasks file for ipl_system_to_conduct_ipl_action_of_ptfs
 
-- hosts: testhost
+- hosts: '{{ testhost }}'
   gather_facts: false
   collections:
     - ibm.power_ibmi
@@ -33,19 +21,18 @@
     timeout_option: '*CONTINUE'
     parameters: ''
 
-  - name: Reboot the system immediately if auto_ipl is set to true and at least one PTF requires an IPL
-        ibmi_reboot:
-          pre_reboot_delay: '{{ pre_reboot_delay }}'
-          post_reboot_delay: '{{ post_reboot_delay }}'
-          reboot_timeout: '{{ reboot_timeout }}'
-          connect_timeout: '{{ connect_timeout }}'
-          test_command: '{{ test_command }}'
-          msg: '{{ msg }}'
-          how_to_end: '{{ how_to_end }}'
-          controlled_end_delay_time: '{{ controlled_end_delay_time }}'
-          reboot_type: '{{ reboot_type }}'
-          ipl_source: '{{ ipl_source }}'
-          end_subsystem_option: '{{ end_subsystem_option }}'
-          timeout_option: '{{ timeout_option }}'
-        when: auto_ipl | bool
-        
+    name: "Reboot the system immediately if auto_ipl is set to true and at least one PTF requires an IPL"
+    ibmi_reboot:
+      pre_reboot_delay: '{{ pre_reboot_delay }}'
+      post_reboot_delay: '{{ post_reboot_delay }}'
+      reboot_timeout: '{{ reboot_timeout }}'
+      connect_timeout: '{{ connect_timeout }}'
+      test_command: '{{ test_command }}'
+      msg: '{{ msg }}'
+      how_to_end: '{{ how_to_end }}'
+      controlled_end_delay_time: '{{ controlled_end_delay_time }}'
+      reboot_type: '{{ reboot_type }}'
+      ipl_source: '{{ ipl_source }}'
+      end_subsystem_option: '{{ end_subsystem_option }}'
+      timeout_option: '{{ timeout_option }}'
+    when: auto_ipl | bool
