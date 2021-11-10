@@ -1,6 +1,8 @@
 ---
 
-- hosts: 172.69.11.82
+- name: IPL single IBMi host
+
+  host: '{{ testhost }}'
   gather_facts: false
   collections:
     - ibm.power_ibmi
@@ -21,20 +23,14 @@
     timeout_option: '*CONTINUE'
     parameters: ''
 
-    jobs:
-      - name: Reboot the system immediately if auto_ipl is set to true and at least one PTF requires an IPL
-        ibm_reboot:
-          pre_reboot_delay: '{{ pre_reboot_delay }}'
-          post_reboot_delay: '{{ post_reboot_delay }}'
-          reboot_timeout: '{{ reboot_timeout }}'
-          connect_timeout: '{{ connect_timeout }}'
-          test_command: '{{ test_command }}'
-          msg: '{{ msg }}'
-          how_to_end: '{{ how_to_end }}'
-          controlled_end_delay_time: '{{ controlled_end_delay_time }}'
-          reboot_type: '{{ reboot_type }}'
-          ipl_source: '{{ ipl_source }}'
-          end_subsystem_option: '{{ end_subsystem_option }}'
-          timeout_option: '{{ timeout_option }}'
-        
-        when: auto_ipl | bool
+  tasks:
+
+    - name: Query the list of ptfs which requires an IPL
+      ibmi_sql_query:
+        sql: "SELECT PTF_IDENTIFIER, PTF_PRODUCT_ID, PTF_IPL_ACTION, A.* FROM QSYS2.PTF_INFO A WHERE PTF_IPL_ACTION <> 'NONE'"
+      register: query_ptf_result
+
+    - name: Debug msg
+      debug:
+        msg: 'No PTFs require an IPL.'
+      when: query_ptf_result.row | length == 0
