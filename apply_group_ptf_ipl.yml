@@ -1,8 +1,6 @@
 ---
 
-- name: IPL single IBMi host
-
-  hosts: '{{ testhost }}'
+- hosts: '{{ testhost }}'
   gather_facts: false
   collections:
     - ibm.power_ibmi
@@ -34,4 +32,3 @@
       debug:
         msg: 'No PTFs require an IPL.'
       when: query_ptf_result.row | length == 0
-  
