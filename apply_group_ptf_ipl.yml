@@ -1,6 +1,6 @@
 ---
 
-- hosts: '{{ testhost }}'
+- hosts: 172.69.11.82
   gather_facts: false
   collections:
     - ibm.power_ibmi
