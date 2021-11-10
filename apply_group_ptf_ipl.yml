@@ -21,18 +21,20 @@
     timeout_option: '*CONTINUE'
     parameters: ''
 
-    name: Reboot the system immediately if auto_ipl is set to true and at least one PTF requires an IPL
-      ibmi_reboot:
-        pre_reboot_delay: '{{ pre_reboot_delay }}'
-        post_reboot_delay: '{{ post_reboot_delay }}'
-        reboot_timeout: '{{ reboot_timeout }}'
-        connect_timeout: '{{ connect_timeout }}'
-        test_command: '{{ test_command }}'
-        msg: '{{ msg }}'
-        how_to_end: '{{ how_to_end }}'
-        controlled_end_delay_time: '{{ controlled_end_delay_time }}'
-        reboot_type: '{{ reboot_type }}'
-        ipl_source: '{{ ipl_source }}'
-        end_subsystem_option: '{{ end_subsystem_option }}'
-        timeout_option: '{{ timeout_option }}'
-    when: auto_ipl | bool
+    jobs:
+      - name: Reboot the system immediately if auto_ipl is set to true and at least one PTF requires an IPL
+        ibm_reboot:
+          pre_reboot_delay: '{{ pre_reboot_delay }}'
+          post_reboot_delay: '{{ post_reboot_delay }}'
+          reboot_timeout: '{{ reboot_timeout }}'
+          connect_timeout: '{{ connect_timeout }}'
+          test_command: '{{ test_command }}'
+          msg: '{{ msg }}'
+          how_to_end: '{{ how_to_end }}'
+          controlled_end_delay_time: '{{ controlled_end_delay_time }}'
+          reboot_type: '{{ reboot_type }}'
+          ipl_source: '{{ ipl_source }}'
+          end_subsystem_option: '{{ end_subsystem_option }}'
+          timeout_option: '{{ timeout_option }}'
+        
+        when: auto_ipl | bool
